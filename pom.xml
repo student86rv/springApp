@@ -7,6 +7,7 @@
     <groupId>ua.epam</groupId>
     <artifactId>springApp</artifactId>
     <version>1.0.0</version>
+    <packaging>war</packaging>
 
     <properties>
         <java.version>1.8</java.version>
@@ -21,6 +22,9 @@
     </properties>
 
     <build>
+
+        <finalName>springApp</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

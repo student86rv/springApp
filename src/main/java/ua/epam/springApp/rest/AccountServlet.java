@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Controller
-@WebServlet(name = "AccountServlet", urlPatterns = "/api/v1/accounts")
+//@WebServlet(name = "AccountServlet", urlPatterns = "/api/v1/accounts")
 public class AccountServlet extends HttpServlet {
 
     private static Logger logger = Logger.getLogger(AccountServlet.class.getName());

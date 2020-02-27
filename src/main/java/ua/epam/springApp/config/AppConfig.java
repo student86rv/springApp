@@ -1,11 +1,11 @@
-package ua.epam.springApp;
+package ua.epam.springApp.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.context.annotation.Import;
 
 @Configuration
-@EnableWebMvc
 @ComponentScan("ua.epam.springApp")
+@Import(WebConfig.class)
 public class AppConfig {
 }
