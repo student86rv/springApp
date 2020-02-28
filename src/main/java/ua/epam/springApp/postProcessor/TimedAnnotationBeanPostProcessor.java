@@ -35,13 +35,13 @@ public class TimedAnnotationBeanPostProcessor implements BeanPostProcessor {
         return bean;
     }
 
-    private InvocationHandler getInvocationHandler(Object bean){
-        return (object, method, args) -> {
-                long before = System.nanoTime();
-                Object returnValue = method.invoke(bean, args);
-                long after = System.nanoTime();
-                logger.log(Level.INFO, method.getName() + " executed in " + (after - before) + "ns");
-                return returnValue;
+    private InvocationHandler getInvocationHandler(Object bean) {
+        return (proxy, method, args) -> {
+            long before = System.nanoTime();
+            Object returnValue = method.invoke(bean, args);
+            long after = System.nanoTime();
+            logger.log(Level.INFO, method.getName() + " method executed in " + (after - before) + " ns");
+            return returnValue;
         };
     }
 }

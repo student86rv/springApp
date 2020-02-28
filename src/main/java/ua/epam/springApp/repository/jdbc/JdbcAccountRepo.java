@@ -1,6 +1,7 @@
 package ua.epam.springApp.repository.jdbc;
 
 import org.springframework.stereotype.Repository;
+import ua.epam.springApp.annotation.Timed;
 import ua.epam.springApp.model.Account;
 import ua.epam.springApp.model.AccountStatus;
 import ua.epam.springApp.repository.GenericRepository;
@@ -13,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Repository
+@Timed
 public class JdbcAccountRepo implements GenericRepository<Account, Long> {
 
     private static Logger logger = Logger.getLogger(JdbcAccountRepo.class.getName());
