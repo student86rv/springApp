@@ -2,6 +2,7 @@ package ua.epam.springApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.epam.springApp.exception.EntityNotFoundException;
 import ua.epam.springApp.model.Account;
 import ua.epam.springApp.repository.GenericRepository;
 
@@ -24,21 +25,37 @@ public class AccountService implements GenericService<Account, Long>{
 
     @Override
     public Account get(Long id) {
-        return accountRepo.get(id);
+        Account account = accountRepo.get(id);
+        if (account == null) {
+            throw new EntityNotFoundException();
+        }
+        return account;
     }
 
     @Override
     public List<Account> getAll() {
-        return accountRepo.getAll();
+        List<Account> list = accountRepo.getAll();
+        if (list.size() == 0) {
+            throw new EntityNotFoundException();
+        }
+        return list;
     }
 
     @Override
     public boolean update(Account entity) {
-        return accountRepo.update(entity);
+        boolean updated = accountRepo.update(entity);
+        if (!updated) {
+            throw new EntityNotFoundException();
+        }
+        return updated;
     }
 
     @Override
     public Account remove(Long id) {
-        return accountRepo.remove(id);
+        Account account = accountRepo.remove(id);
+        if (account == null) {
+            throw new EntityNotFoundException();
+        }
+        return account;
     }
 }

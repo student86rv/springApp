@@ -2,6 +2,7 @@ package ua.epam.springApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.epam.springApp.exception.EntityNotFoundException;
 import ua.epam.springApp.model.Skill;
 import ua.epam.springApp.repository.GenericRepository;
 
@@ -24,21 +25,37 @@ public class SkillService implements GenericService<Skill, Long> {
 
     @Override
     public Skill get(Long id) {
-        return skillRepo.get(id);
+        Skill skill = skillRepo.get(id);
+        if (skill == null) {
+            throw new EntityNotFoundException();
+        }
+        return skill;
     }
 
     @Override
     public List<Skill> getAll() {
-        return skillRepo.getAll();
+        List<Skill> list = skillRepo.getAll();
+        if (list.size() == 0) {
+            throw new EntityNotFoundException();
+        }
+        return list;
     }
 
     @Override
     public boolean update(Skill entity) {
-        return skillRepo.update(entity);
+        boolean updated = skillRepo.update(entity);
+        if (!updated) {
+            throw new EntityNotFoundException();
+        }
+        return updated;
     }
 
     @Override
     public Skill remove(Long id) {
-        return skillRepo.remove(id);
+        Skill skill = skillRepo.remove(id);
+        if (skill == null) {
+            throw new EntityNotFoundException();
+        }
+        return skill;
     }
 }
