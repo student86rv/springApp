@@ -54,7 +54,7 @@
                     <assembleDirectory>target</assembleDirectory>
                     <programs>
                         <program>
-                            <mainClass>ua.epam.springApp.WebApplication</mainClass>
+                            <mainClass>ua.epam.springapp.WebApplication</mainClass>
                             <name>webapp</name>
                         </program>
                     </programs>
