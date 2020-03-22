@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/v1/developers")
 public class DeveloperController {
 
-    private DeveloperService developerService;
+    private final DeveloperService developerService;
 
     @Autowired
     public DeveloperController(DeveloperService developerService) {

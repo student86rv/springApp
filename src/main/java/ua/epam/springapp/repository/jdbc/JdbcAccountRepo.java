@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 import ua.epam.springapp.annotation.Timed;
 import ua.epam.springapp.model.Account;
 import ua.epam.springapp.model.AccountStatus;
-import ua.epam.springapp.repository.GenericRepository;
+import ua.epam.springapp.repository.AccountRepository;
 import ua.epam.springapp.util.ConnectionUtil;
 
 import java.sql.*;
@@ -15,18 +15,18 @@ import java.util.logging.Logger;
 
 @Repository
 @Timed
-public class JdbcAccountRepo implements GenericRepository<Account, Long> {
+public class JdbcAccountRepo implements AccountRepository {
 
-    private static Logger logger = Logger.getLogger(JdbcAccountRepo.class.getName());
+    private static Logger LOGGER = Logger.getLogger(JdbcAccountRepo.class.getName());
 
     private Connection connection;
 
     public JdbcAccountRepo() {
         try {
             this.connection = ConnectionUtil.getConnection();
-            logger.log(Level.INFO, "GenericRepository connected to database");
+            LOGGER.log(Level.INFO, "GenericRepository connected to database");
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Connection to database failed");
+            LOGGER.log(Level.SEVERE, "Connection to database failed");
         }
         createAccountTable();
     }
@@ -39,9 +39,9 @@ public class JdbcAccountRepo implements GenericRepository<Account, Long> {
                 ");";
         try (Statement statement = connection.createStatement()) {
             statement.execute(createQuery);
-            logger.log(Level.INFO, "New table was created");
+            LOGGER.log(Level.INFO, "New table was created");
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Table creating failed");
+            LOGGER.log(Level.SEVERE, "Table creating failed");
         }
     }
 
@@ -59,7 +59,7 @@ public class JdbcAccountRepo implements GenericRepository<Account, Long> {
             }
             entity.setId(id);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Writing failed");
+            LOGGER.log(Level.SEVERE, "Writing failed");
         }
     }
 
@@ -77,7 +77,7 @@ public class JdbcAccountRepo implements GenericRepository<Account, Long> {
                 );
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Reading failed");
+            LOGGER.log(Level.SEVERE, "Reading failed");
         }
         return account;
     }
@@ -95,7 +95,7 @@ public class JdbcAccountRepo implements GenericRepository<Account, Long> {
                 accounts.add(new Account(id, email, status));
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Reading failed");
+            LOGGER.log(Level.SEVERE, "Reading failed");
         }
         return accounts;
     }
@@ -109,7 +109,7 @@ public class JdbcAccountRepo implements GenericRepository<Account, Long> {
         try (Statement statement = connection.createStatement()) {
             updatedRows = statement.executeUpdate(updateQuery);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Updating failed");
+            LOGGER.log(Level.SEVERE, "Updating failed");
         }
         return updatedRows > 0;
     }
@@ -121,7 +121,7 @@ public class JdbcAccountRepo implements GenericRepository<Account, Long> {
         try (Statement statement = connection.createStatement()) {
             statement.execute(removeQuery);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Deleting failed");
+            LOGGER.log(Level.SEVERE, "Deleting failed");
         }
         return account;
     }

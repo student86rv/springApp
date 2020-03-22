@@ -13,23 +13,23 @@ import java.util.logging.Logger;
 
 public class ConnectionUtil {
 
-    private static Logger logger = Logger.getLogger(ConnectionUtil.class.getName());
-    private static BasicDataSource dataSource = new BasicDataSource();
+    private static Logger LOGGER = Logger.getLogger(ConnectionUtil.class.getName());
+    private static BasicDataSource DATA_SOURCE = new BasicDataSource();
     private static Properties properties;
 
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            logger.log(Level.SEVERE, "Database driver registration failed");
+            LOGGER.log(Level.SEVERE, "Database driver registration failed");
         }        properties = readProperties();
-        dataSource.setUrl(properties.getProperty("db.url") +
+        DATA_SOURCE.setUrl(properties.getProperty("db.url") +
                 "?serverTimezone=" + TimeZone.getDefault().getID());
-        dataSource.setUsername(properties.getProperty("db.username"));
-        dataSource.setPassword(properties.getProperty("db.password"));
-        dataSource.setMinIdle(5);
-        dataSource.setMaxIdle(10);
-        dataSource.setMaxOpenPreparedStatements(100);
+        DATA_SOURCE.setUsername(properties.getProperty("db.username"));
+        DATA_SOURCE.setPassword(properties.getProperty("db.password"));
+        DATA_SOURCE.setMinIdle(5);
+        DATA_SOURCE.setMaxIdle(10);
+        DATA_SOURCE.setMaxOpenPreparedStatements(100);
     }
 
     private static Properties readProperties() {
@@ -39,12 +39,12 @@ public class ConnectionUtil {
             properties = new Properties();
             properties.load(input);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Database config reading failed");
+            LOGGER.log(Level.SEVERE, "Database config reading failed");
         }
         return properties;
     }
 
     public static Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
+        return DATA_SOURCE.getConnection();
     }
 }

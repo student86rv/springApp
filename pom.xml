@@ -7,7 +7,6 @@
     <groupId>ua.epam</groupId>
     <artifactId>springApp</artifactId>
     <version>1.0.0</version>
-    <packaging>war</packaging>
 
     <properties>
         <java.version>1.8</java.version>
@@ -22,8 +21,6 @@
     </properties>
 
     <build>
-
-        <finalName>springApp</finalName>
 
         <plugins>
             <plugin>
@@ -169,21 +166,25 @@
             <artifactId>tomcat-embed-core</artifactId>
             <version>${tomcat.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
             <version>${tomcat.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jasper</artifactId>
             <version>${tomcat.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jasper-el</artifactId>
             <version>${tomcat.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jsp-api</artifactId>
@@ -196,6 +197,7 @@
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>

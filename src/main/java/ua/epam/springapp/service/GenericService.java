@@ -12,5 +12,7 @@ public interface GenericService<T, ID> {
 
     boolean update(T entity);
 
+    boolean update(ID id, T entity);
+
     T remove(ID id);
 }

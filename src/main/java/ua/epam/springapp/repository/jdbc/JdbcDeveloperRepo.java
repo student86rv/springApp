@@ -5,7 +5,7 @@ import ua.epam.springapp.model.Account;
 import ua.epam.springapp.model.AccountStatus;
 import ua.epam.springapp.model.Developer;
 import ua.epam.springapp.model.Skill;
-import ua.epam.springapp.repository.GenericRepository;
+import ua.epam.springapp.repository.DeveloperRepository;
 import ua.epam.springapp.util.ConnectionUtil;
 
 import java.sql.*;
@@ -17,9 +17,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Repository
-public class JdbcDeveloperRepo implements GenericRepository<Developer, Long> {
+public class JdbcDeveloperRepo implements DeveloperRepository {
 
-    private static Logger logger = Logger.getLogger(JdbcDeveloperRepo.class.getName());
+    private static Logger LOGGER = Logger.getLogger(JdbcDeveloperRepo.class.getName());
 
     private final String GET_SKILL_QUERY = "SELECT s.id id, s.name name FROM skills s INNER JOIN\n" +
             "developer_skills d_s ON s.id = d_s.skill_id WHERE d_s.developer_id = %d ORDER BY id;";
@@ -32,9 +32,9 @@ public class JdbcDeveloperRepo implements GenericRepository<Developer, Long> {
     public JdbcDeveloperRepo() {
         try {
             this.connection = ConnectionUtil.getConnection();
-            logger.log(Level.INFO, "GenericRepository connected to database");
+            LOGGER.log(Level.INFO, "GenericRepository connected to database");
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Connection to database failed");
+            LOGGER.log(Level.SEVERE, "Connection to database failed");
         }
         createTables();
     }
@@ -57,9 +57,9 @@ public class JdbcDeveloperRepo implements GenericRepository<Developer, Long> {
             statement.addBatch(createDevQuery);
             statement.addBatch(createDSQuery);
             statement.executeBatch();
-            logger.log(Level.INFO, "New tables were created");
+            LOGGER.log(Level.INFO, "New tables were created");
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Tables creating failed");
+            LOGGER.log(Level.SEVERE, "Tables creating failed");
         }
     }
 
@@ -84,11 +84,11 @@ public class JdbcDeveloperRepo implements GenericRepository<Developer, Long> {
             connection.commit();
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Writing failed. Trying to cancel transaction...");
+            LOGGER.log(Level.SEVERE, "Writing failed. Trying to cancel transaction...");
             try {
                 connection.rollback();
             } catch (SQLException e1) {
-                logger.log(Level.SEVERE, "Transaction rollback failed");
+                LOGGER.log(Level.SEVERE, "Transaction rollback failed");
             }
         }
     }
@@ -122,11 +122,11 @@ public class JdbcDeveloperRepo implements GenericRepository<Developer, Long> {
             connection.commit();
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Reading failed. Trying to cancel transaction...");
+            LOGGER.log(Level.SEVERE, "Reading failed. Trying to cancel transaction...");
             try {
                 connection.rollback();
             } catch (SQLException e1) {
-                logger.log(Level.SEVERE, "Transaction rollback failed");
+                LOGGER.log(Level.SEVERE, "Transaction rollback failed");
             }
         }
         return developer;
@@ -166,11 +166,11 @@ public class JdbcDeveloperRepo implements GenericRepository<Developer, Long> {
             connection.commit();
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Reading failed. Trying to cancel transaction...");
+            LOGGER.log(Level.SEVERE, "Reading failed. Trying to cancel transaction...");
             try {
                 connection.rollback();
             } catch (SQLException e1) {
-                logger.log(Level.SEVERE, "Transaction rollback failed");
+                LOGGER.log(Level.SEVERE, "Transaction rollback failed");
             }
         }
         return developers;
@@ -193,11 +193,11 @@ public class JdbcDeveloperRepo implements GenericRepository<Developer, Long> {
             connection.commit();
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Updating failed. Trying to cancel transaction...");
+            LOGGER.log(Level.SEVERE, "Updating failed. Trying to cancel transaction...");
             try {
                 connection.rollback();
             } catch (SQLException e1) {
-                logger.log(Level.SEVERE, "Transaction rollback failed");
+                LOGGER.log(Level.SEVERE, "Transaction rollback failed");
             }
         }
         return updatedRows > 0;
@@ -212,7 +212,7 @@ public class JdbcDeveloperRepo implements GenericRepository<Developer, Long> {
             statement.addBatch(String.format(DELETE_DEV_SKILL_QUERY, id));
             statement.executeBatch();
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Deleting failed" + e);
+            LOGGER.log(Level.SEVERE, "Deleting failed" + e);
         }
         return developer;
     }

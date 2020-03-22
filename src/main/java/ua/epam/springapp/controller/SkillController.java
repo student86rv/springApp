@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/v1/skills")
 public class SkillController {
 
-    private SkillService skillService;
+    private final SkillService skillService;
 
     @Autowired
     public SkillController(SkillService skillService) {
